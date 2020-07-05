@@ -46,18 +46,20 @@ referência à um documento.
   - `name`: nome da coleção;
   - `options (opcional)`: define as configurações da coleção.
 
-    ||||
-    |--|--|--|
     |Campo|Tipo|Descrição|
+    |--|--|--|
     |capped|boolean|Define uma coleção limitada, se `true`, o campo size deve ser definido|
     |size|number|Tamanho em `bytes` para definir o limite da coleção|
     |max|number|Define o limite máximo de documento na coleção|
     |validator|document|Documento que define regras e exceções da documentos|
     |validationLevel|string|Define o rigor das regras de validação aplicadas aos documentos|
     |validationAction|string|Determina se acusa erros em documentos inválidos ou apenas alerta sobre as violações (Permite documentos inválidos serem inseridos)|
-    ||||
+
 - `show collections`: lista as coleções existentes;
 - `db.exemplo_collection.drop()`: remove a coleção da base de dados.
+
+### Create
+
 
 
 ## Autor
