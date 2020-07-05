@@ -33,12 +33,12 @@ referência à um documento.
   ```
 
 ### Comandos básicos
-- `mongod --dbpath="Exemplo\Diretorio"`: define um diretório para armazenamento dos dados;
+- `mongod --dbpath="X:\Exemplo"`: define um diretório para armazenamento dos dados;
 - `mongo -host localhost:27017`: acesso ao banco local;
-- `use exemplo_db`: acessar uma base de dados, caso a mesma não exista, automaticamente é criada após a inserção de um documento na base citada;
+- `use notas`: acessar uma base de dados, caso a mesma não exista, automaticamente é criada após a inserção de um documento na base citada;
 - `show dbs`: exibe as bases de dados existentes;
-- `db.exemplo_documento.insert({"nome":"Exemplo"})`: insere um documento na base de dados;
-- `db`: exibe o banco que está sendo manipulado;
+- `db.aluno.insert({"nome":"Maria dos Anjos"})`: insere um documento na base de dados;
+- `db`: exibe a base que está sendo manipulada;
 - `db.dropDatabase()`: remove a base de dados atual do servidor MongoDB;
 
 ### Coleções
@@ -56,10 +56,12 @@ referência à um documento.
     |validationAction|string|Determina se acusa erros em documentos inválidos ou apenas alerta sobre as violações (Permite documentos inválidos serem inseridos)|
 
 - `show collections`: lista as coleções existentes;
-- `db.exemplo_collection.drop()`: remove a coleção da base de dados.
+- `db.aluno.drop()`: remove a coleção da base de dados.
 
 ### Create
-
+- `db.aluno.insertOne({nome: "Maria dos Anjos"})`: insere apenas um documento na base de dados;
+- `db.aluno.insertMany([{nome: "Maria dos Anjos", sexo: "F"}, {nome: "João Paulo", sexo: "M"}])`: insere múltiplos documentos objeto na base de dados;
+- `db.aluno.insert({})`: insere um ou mais documento na base de dados;
 
 
 ## Autor
