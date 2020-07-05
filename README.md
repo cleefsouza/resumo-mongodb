@@ -19,40 +19,50 @@ referência à um documento.
 - Para facilitar o manuseio do mongo no windows, adicione as variaveis de ambiente o **path** da pasta bin;
 - Verifique se está tudo funcionando executando o comando `mongo --version` no seu terminal. Exemplo do que deve ser exibido:
   ```shell
-    MongoDB shell version v4.2.8
-    git version: 43d25964249164d76d5e04dd6cf38f6111e21f5f
-    OpenSSL version: OpenSSL 1.1.1  11 Sep 2018
-    allocator: tcmalloc
-    modules: none
-    build environment:
-        distmod: ubuntu1804
-        distarch: x86_64
-        target_arch: x86_64
+  MongoDB shell version v4.2.8
+  git version: 43d25964249164d76d5e04dd6cf38f6111e21f5f
+  OpenSSL version: OpenSSL 1.1.1  11 Sep 2018
+  allocator: tcmalloc
+  modules: none
+  build environment:
+      distmod: ubuntu1804
+      distarch: x86_64
+      target_arch: x86_64
   ```
 
-### Base exemplo
-> Database: notas  
-> Collection: aluno
-
-|_id|nome|sexo|nota|
-|--|--|--|--|
-|1|João Paulo|M|9|
-|2|Maria dos Anjos|F|7.5|
-|3|Ana Julia|F|10|
-|4|Joaquim Monteiro|M|6.3|
-
 ### Comandos básicos
-- `mongod --dbpath="X:\Exemplo"`: define um diretório para armazenamento dos dados;
-- `mongo -host localhost:27017`: acesso ao banco local;
-- `use notas`: acessar uma base de dados, caso a mesma não exista, automaticamente é criada após a inserção de um documento na base citada;
-- `show dbs`: exibe as bases de dados existentes;
-- `db`: exibe a base que está sendo manipulada;
-- `db.dropDatabase()`: remove a base de dados atual do servidor MongoDB;
+- Definir um diretório para armazenamento dos dados
+  ```shell
+  mongod --dbpath="X:\...\Exemplo"
+  ```
+- Acessar o banco localmente
+  ```shell
+  mongo -host localhost:27017
+  ```
+- Acessar uma base de dados, caso a mesma não exista, automaticamente é criada após a inserção de um documento na base citada
+  ```shell
+  use DATABASE
+  ```
+- Exibir as bases de dados existentes
+  ```shell
+  show dbs
+  ```
+- Exibir a base que está sendo manipulada
+  ```shell
+  db
+  ```
+- Remover a base de dados atual do servidor MongoDB
+  ```shell
+  db.dropDatabase()
+  ```
 
 ### Coleções
-- `db.createCollection(name, options)`: criar uma coleção na base de dados;
-  - `name`: nome da coleção;
-  - `options (opcional)`: define as configurações da coleção.
+- Criar uma coleção na base de dados
+  ```shell
+  db.createCollection(name, options)
+  ```
+  - `name`: nome da coleção
+  - `options (opcional)`: define as configurações da coleção
     |Campo|Tipo|Descrição|
     |--|--|--|
     |capped|boolean|Define uma coleção limitada, se `true`, o campo size deve ser definido|
@@ -61,74 +71,154 @@ referência à um documento.
     |validator|document|Documento que define regras e exceções da documentos|
     |validationLevel|string|Define o rigor das regras de validação aplicadas aos documentos|
     |validationAction|string|Determina se acusa erros em documentos inválidos ou apenas alerta sobre as violações (Permite documentos inválidos serem inseridos)|
-- `show collections`: lista as coleções existentes;
-- `db.aluno.drop()`: remove a coleção da base de dados.
+- Listar as coleções existentes
+  ```shell
+  show collections
+  ```
+- Remover uma coleção da base de dados
+  ```shell
+  db.COLLECTION.drop()
+  ```
 
 ### Create
-- `db.aluno.insertOne({nome: "Ana Julia", sexo: "F", nota: 10})`: insere apenas um documento na base de dados;
-- `db.aluno.insertMany([{nome: "Maria dos Anjos", sexo: "F", nota: 7.5}, {nome: "João Paulo", sexo: "M", nota: 9}])`: insere múltiplos documentos objeto na base de dados;
-- `db.aluno.insert({...})`: insere um ou mais documento na base de dados;
+- Inserir apenas um documento na base de dados
+  ```shell
+  db.COLLECTION.insertOne({nome: "Exemplo 1", tipo: 1, valor: 10})
+  ```
+- Inserir múltiplos documentos objeto na base de dados
+  ```shell
+  db.COLLECTION.insertMany([
+    {nome: "Exemplo 2", tipo: 2, valor: 7.5},
+    {nome: "Exemplo 3", tipo: 3, valor: 9}
+  ])
+  ```
+- Inserir um ou mais documento na base de dados
+  ```shell
+  db.COLLECTION.insert({...})
+  ```
 
 ### Retrieve
-- `db.aluno.find(query, porjection)`: retorna todos os documentos existentes na coleção;
+- Retorna todos os documentos existentes na coleção
+  ```shell
+  db.COLLECTION.find(query, porjection)
+  ```
   - `query (opcional)`: quais filtros serão utilizados;
     ```shell
-      db.aluno.find({nome: "Ana Julia"}, {});
-      # Output:
-      # { "_id" : 1, "nome" : "Ana Julia", "sexo" : "F", "nota" : 10 }
-    ```
-  - `projection (opcional)`: quais campos serão retornados (0: remove | 1: permanece).
-    ```shell
-      db.aluno.find({}, {_id: 0, nome: 1});
+    db.COLLECTION.find({nome: "Exemplo 1"}, {});
 
-      # Output:
-      # { "nome" : "Ana Julia" }
-      # { "nome" : "Maria dos Anjos" }
-      # { "nome" : "João Paulo" }
-      # { "nome" : "Joaquim Monteiro" }
+    # Output:
+    # { "_id" : 1, "nome" : "Exemplo 1", "tipo" : "1", "valor" : 10 }
     ```
-  - `.limit(n)`: adiciona o limite de documentos que serão retornados;
-  - `.skip(n)`: pula alguns documentos na consulta;
-  - `.sort({_id: 1})`: ordena os valores da consulta de acordo com o campo passado (-1: decrescente | 1: crescente)
-  - `pretty()`: exibe o resultado de forma mais organizada;
-- `db.aluno.findOne(query, projection)`: retorna apenas um registro;
-- Operadores lógicos:
-  - `.find({$and: [{nome: ...}, {nota: ...}]})`: Retorna tudo que atende as condições;
-  - `.find({$or: [{sexo: ...}, {nota: ...}]})`: Retorna tudo que atende uma das confições;
-  - `.find({sexo: {$not: {$eq: "F"}}});`: Inverte a condição especificada;
-  - `.find({$nor: [{nome: ...}, {nota: ...}]})`: Retorna tudo que não atender as condições;
-- Operadores de comparação:
-  - `$eq`: Igual à ...
+  - `projection (opcional)`: quais campos serão retornados
+    ```shell
+    # 0: remove
+    # 1: permanece
+
+    db.COLLECTION.find({}, {_id: 0, nome: 1});
+
+    # Output:
+    # { "nome" : "Exemplo 1" }
+    # { "nome" : "Exemplo 2" }
+    # { "nome" : "Exemplo 3" }
     ```
-    db.aluno.find({nota: {$eq: 10}}, {_id: 0});
+  - Adicionar limite de documentos que serão retornados
+    ```shell
+    db.COLLECTION.find().limit(n)
     ```
-  - `$gt`: Maior que ...
+  - Pular alguns documentos na consulta;
+    ```shell
+    db.COLLECTION.find().skip(n)
     ```
-    db.aluno.find({nota: {$gt: 5}}, {_id: 0});
+  - Ordenar os valores da consulta de acordo com o campo passado
+    ```shell
+    # 1: crescente
+    # -1: decrescente
+
+    db.COLLECTION.find().sort({_id: 1})
     ```
-  - `$gte`: Maior ou igual ...
+  - Exibir os resultados de forma mais organizada;
+    ```shell
+    db.COLLECTION.find().pretty()
     ```
-    db.aluno.find({nota: {$gte: 7}}, {_id: 0});
+- Retornar apenas um registro
+  ```shell
+  db.COLLECTION.findOne(query, projection)
+  ```
+
+### Operadores lógicos
+  - Retorna tudo que atende as condições
+    ```shell
+    # $and
+
+    db.COLLECTION.find({$and: [{nome: ...}, {valor: ...}]})
     ```
-  - `$in`: Pertence à ...
+  - Retorna tudo que atende uma das confições
+    ```shell
+    # $or
+
+    db.COLLECTION.find({$or: [{tipo: ...}, {valor: ...}]})
     ```
-    db.aluno.find({nome: {$in: ["Ana", "João"]}}, {_id: 0});
+  - Inverte a condição especificada
+    ```shell
+    # $not
+
+    db.COLLECTION.find({tipo: {$not: {$eq: "1"}}})
     ```
-  - `$lt`: Menor que ...
+  - Retorna tudo que não atender as condições
+    ```shell
+    # $nor
+
+    db.COLLECTION.find({$nor: [{nome: ...}, {valor: ...}]})
     ```
-    db.aluno.find({nota: {$lt: 5}}, {_id: 0});
+
+### Operadores de comparação
+  - Igual à ...
+    ```shell
+    # $eq
+
+    db.COLLECTION.find({tipo: {$eq: 10}}, {_id: 0});
     ```
-  - `$lte`: Menor ou igual ...
+  - Maior que ...
+    ```shell
+    # $gt
+    
+    db.COLLECTION.find({tipo: {$gt: 5}}, {_id: 0});
     ```
-    db.aluno.find({nota: {$lte: 7}}, {_id: 0});
+  - Maior ou igual ...
+    ```shell
+    # $gte
+    
+    db.COLLECTION.find({tipo: {$gte: 7}}, {_id: 0});
     ```
-  - `$ne`: Não é igual ...
+  - Pertence à ...
+    ```shell
+    # $in
+    
+    db.COLLECTION.find({nome: {$in: ["Exemplo 4", "Exemplo 5"]}}, {_id: 0});
     ```
-    db.aluno.find({sexo: {$ne: "M"}}, {_id: 0});
+  - Menor que ...
+    ```shell
+    # $lt
+    
+    db.COLLECTION.find({tipo: {$lt: 5}}, {_id: 0});
     ```
-  - `$nin`: Não pertence à ...
+  - Menor ou igual ...
+    ```shell
+    # $lte
+    
+    db.COLLECTION.find({tipo: {$lte: 7}}, {_id: 0});
     ```
-    db.aluno.find({nome: {$nin: ["Joaquim, "Maria"]}}, {_id: 0});
+  - Não é igual ...
+    ```shell
+    # $ne
+    
+    db.COLLECTION.find({tipo: {$ne: 3}}, {_id: 0});
+    ```
+  - Não pertence à ...
+    ```shell
+    # $nin
+    
+    db.COLLECTION.find({nome: {$nin: ["Exemplo 1", "Exemplo 2"]}}, {_id: 0});
     ```
 
 ## Autor
