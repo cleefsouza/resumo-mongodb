@@ -37,7 +37,7 @@ referência à um documento.
 - `mongo -host localhost:27017`: acesso ao banco local;
 - `use notas`: acessar uma base de dados, caso a mesma não exista, automaticamente é criada após a inserção de um documento na base citada;
 - `show dbs`: exibe as bases de dados existentes;
-- `db.aluno.insert({"nome":"Maria dos Anjos"})`: insere um documento na base de dados;
+- `db.aluno.insert({nome: "Maria dos Anjos"})`: insere um documento na base de dados;
 - `db`: exibe a base que está sendo manipulada;
 - `db.dropDatabase()`: remove a base de dados atual do servidor MongoDB;
 
@@ -45,7 +45,6 @@ referência à um documento.
 - `db.createCollection(name, options)`: criar uma coleção na base de dados;
   - `name`: nome da coleção;
   - `options (opcional)`: define as configurações da coleção.
-
     |Campo|Tipo|Descrição|
     |--|--|--|
     |capped|boolean|Define uma coleção limitada, se `true`, o campo size deve ser definido|
@@ -54,14 +53,13 @@ referência à um documento.
     |validator|document|Documento que define regras e exceções da documentos|
     |validationLevel|string|Define o rigor das regras de validação aplicadas aos documentos|
     |validationAction|string|Determina se acusa erros em documentos inválidos ou apenas alerta sobre as violações (Permite documentos inválidos serem inseridos)|
-
 - `show collections`: lista as coleções existentes;
 - `db.aluno.drop()`: remove a coleção da base de dados.
 
 ### Create
 - `db.aluno.insertOne({nome: "Maria dos Anjos"})`: insere apenas um documento na base de dados;
 - `db.aluno.insertMany([{nome: "Maria dos Anjos", sexo: "F"}, {nome: "João Paulo", sexo: "M"}])`: insere múltiplos documentos objeto na base de dados;
-- `db.aluno.insert({})`: insere um ou mais documento na base de dados;
+- `db.aluno.insert({...})`: insere um ou mais documento na base de dados;
 
 
 ## Autor
