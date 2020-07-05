@@ -9,6 +9,9 @@ A organização dos dados no MongoDB é definida conforme a hierarquia abaixo:
 - **Coleções:** pode conter diferentes tipos de documentos;
 - **Documentos:** pode conter tuplas de chave e valor em lista, vetor ou uma
 referência à um documento.
+- **Campos:** tuplas, vetores ou referências a outros documentos
+
+<img src="https://d2m498l008ebpa.cloudfront.net/2017/07/sql-nosql.png" title="BDR vs MongoDB" width=500/>
 
 ### Download e instalação
 - Realize o download da versão community no site do MongoDB;
@@ -28,6 +31,15 @@ referência à um documento.
         distarch: x86_64
         target_arch: x86_64
   ```
+
+### Comandos básicos
+- `mongod --dbpath="Exemplo\Diretorio"`: define um diretório para armazenamento dos dados;
+- `mongo -host localhost:27017`: acesso ao banco local;
+- `use exemplo_db`: acessar uma base de dados, caso a mesma não exista, automaticamente é criada após a inserção de um documento na base citada;
+- `show dbs`: exibe as bases de dados existentes;
+- `db.exemplo_documento.insert({"nome":"Exemplo"})`: insere um documento na base de dados;
+- `db`: exibe o banco que está sendo manipulado;
+- `db.dropDatabase()`: remove a base de dados atual do servidor MongoDB;
 
 ## Autor
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
