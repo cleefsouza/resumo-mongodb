@@ -284,13 +284,13 @@ referência à um documento.
 ### Deletar
 - Deleta a primeira ocorrencia do documento de acordo com os parâmetros na query
   ```shell
-  # Deleta o documento cujo id é 5f022654f66a26475d4fbf8c
+  # Deletar o documento cujo id é 5f022654f66a26475d4fbf8c
 
   db.COLLECTION.deleteOne({_id: ObjectId("5f022654f66a26475d4fbf8c")});
   ```
 - Deletar varios documentos de acordo com o filtro estabelecido
   ```shell
-  # Deleta os documentos cujo tipo é 3
+  # Deletar os documentos cujo tipo é 3
 
   db.COLLECTION.deleteMany({tipo: 3});
   ```
