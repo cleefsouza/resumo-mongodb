@@ -232,17 +232,17 @@ referência à um documento.
   ```shell
   # Atualizando todos os documentos do tipo 2
 
-  db.COLLECTION.updateMany({tipo: 2}, {$set: {valor: 2.50}})
+  db.COLLECTION.updateMany({tipo: 2}, {$set: {valor: 2.50}});
   ```
 - Sobrescreve todo o documento por um novo
   ```shell
   # Sobrescrevendo o documento de id 1 por um novo documento
 
-  db.COLLECTION.replaceOne({_id: ObjectId("5f022654f66a26475d4fbf8c")}, { nome : "Exemplo 99", tipo : 99, valor : 99 })
+  db.COLLECTION.replaceOne({_id: ObjectId("5f022654f66a26475d4fbf8c")}, { nome : "Exemplo 99", tipo : 99, valor : 99 });
   ```
 - Modifica um ou mais documentos em uma coleção
   ```shell
-  db.COLLECTION.update(query, update, options)
+  db.COLLECTION.update(query, update, options);
   ```
 
 ### Operadores de atualização
@@ -288,12 +288,80 @@ referência à um documento.
 
   db.COLLECTION.deleteOne({_id: ObjectId("5f022654f66a26475d4fbf8c")});
   ```
-- Deletar varios documentos de acordo com o filtro estabelecido
+- Deletar vários documentos de acordo com o filtro estabelecido
   ```shell
   # Deletar os documentos cujo tipo é 3
 
   db.COLLECTION.deleteMany({tipo: 3});
   ```
+
+### BulkWrite
+Executar comandos em massa
+
+```shell
+db.COLLECTION.bulkWrite([operacao1, operacao2, ...], options);
+```
+
+```shell
+# Exemplo de uma execução comandos em massa
+
+db.COLLECTION.bulkWrite(
+  [
+    {
+      insertOne: {
+        "document": {
+          nome: "Exemplo 1",
+          tipo: 1,
+          valor: 5.99
+        }
+      }
+    },
+    {
+      insertOne: {
+        "document": {
+          nome: "Exemplo 2",
+          tipo: 2,
+          valor: 3.25
+        }
+      }
+    },
+    {
+      updateOne: {
+        "filter": {
+          nome: "Exemplo 3",
+          tipo: 3
+        },
+        "update": {
+          $set: {
+            valor: 9.85
+          }
+        }
+      }
+    },
+    {
+      insertOne: {
+        "document": {
+          nome: "Exemplo 1",
+          tipo: 1,
+          valor: 5.99
+        }
+      }
+    },
+    {
+      deleteOne: {
+        "filter": {
+          _id: ObjectId("5f0520e6b7407942726e4ce0")
+        }
+      }
+    },
+    {
+      ...
+    }
+  ], {ordered: true});
+```
+
+## Mais informações
+Para mais detalhes sobre o MongoDB e sua gama de funcionalidades, consulte a documentação em [MongoDB Getting Started](https://docs.mongodb.com/manual/tutorial/getting-started/).
 
 ## Autor
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
