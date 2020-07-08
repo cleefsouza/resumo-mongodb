@@ -341,9 +341,9 @@ db.COLLECTION.bulkWrite(
     {
       insertOne: {
         "document": {
-          nome: "Exemplo 1",
-          tipo: 1,
-          valor: 5.99
+          nome: "Exemplo 4",
+          tipo: 2,
+          valor: 1.99
         }
       }
     },
