@@ -80,7 +80,7 @@ referência à um documento.
   db.COLLECTION.drop()
   ```
 
-### Create
+### Criar
 - Inserir apenas um documento na base de dados
   ```shell
   db.COLLECTION.insertOne({nome: "Exemplo 1", tipo: 1, valor: 10})
@@ -97,12 +97,12 @@ referência à um documento.
   db.COLLECTION.insert({...})
   ```
 
-### Retrieve
+### Consultar
 - Retorna todos os documentos existentes na coleção
   ```shell
   db.COLLECTION.find(query, porjection)
   ```
-  - `query (opcional)`: quais filtros serão utilizados;
+  - `query (opcional)`: quais filtros serão utilizados
     ```shell
     db.COLLECTION.find({nome: "Exemplo 1"}, {});
 
@@ -219,6 +219,66 @@ referência à um documento.
     # $nin
     
     db.COLLECTION.find({nome: {$nin: ["Exemplo 1", "Exemplo 2"]}}, {_id: 0});
+    ```
+
+### Atualizar
+- Atualiza um documento especifico em uma coleção
+  - `query`: busca a primeira ocorrencia do documento de acordo com os parâmetros na query
+  - `update`: quais os novos valores que serão modificados
+  ```shell
+  db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$set: {tipo: 2, valor: 5.99}});
+  ```
+- Atualiza varios documentos de uma coleção de acordo com os parâmetros na query
+  ```shell
+  # Atualizando todos os documentos do tipo 2
+
+  db.COLLECTION.updateMany({tipo: 2}, {$set: {valor: 2.50}})
+  ```
+- Sobrescreve todo o documento por um novo
+  ```shell
+  # Sobrescrevendo o documento de id 1 por um novo documento
+
+  db.COLLECTION.replaceOne({_id: ObjectId("1")}, { nome : "Exemplo 99", tipo : 99, valor : 99 })
+  ```
+- Modifica um ou mais documentos em uma coleção
+  ```shell
+  db.COLLECTION.update(query, update, options)
+  ```
+
+### Operadores de atualização
+  - Incrementa o valor atual de um campo
+    ```shell
+    # $inc
+    # Incrementando 10 ao valor atual
+
+    db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$inc: {valor: 10}});
+    ```
+  - Atualiza o valor de um campo ou cria um novo campo
+    ```shell
+    # $set
+
+    db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$set: {tipo: 5, valor: 5.99}});
+    ```
+  - Atualiza um campo data com a data e hora atual
+    ```shell
+    # $currentDate
+    # Adicionando o campo modificacao com a data e hora atual em todos os documentos da coleção
+
+    db.COLLECTION.updateMany({}, {$currentDate: {modificacao: true}});
+    ```
+  - Utilizado para remover campos de um documento
+    ```shell
+    # $unset
+    # Removendo campo modificacao de todos os documentos da coleção
+
+    db.COLLECTION.updateMany({}, {$unset: {modificacao: 1}});
+    ```
+  - Multiplica o valor de um campo
+    ```shell
+    # $mul
+    # Multiplicando valor atual por 2
+
+    db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$mul: {valor: 2}});
     ```
 
 ## Autor
