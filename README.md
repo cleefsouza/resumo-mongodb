@@ -107,7 +107,7 @@ referência à um documento.
     db.COLLECTION.find({nome: "Exemplo 1"}, {});
 
     # Output:
-    # { "_id" : 1, "nome" : "Exemplo 1", "tipo" : "1", "valor" : 10 }
+    # { "_id" : "5f022654f66a26475d4fbf8c", "nome" : "Exemplo 1", "tipo" : "1", "valor" : 10 }
     ```
   - `projection (opcional)`: quais campos serão retornados
     ```shell
@@ -238,7 +238,7 @@ referência à um documento.
   ```shell
   # Sobrescrevendo o documento de id 1 por um novo documento
 
-  db.COLLECTION.replaceOne({_id: ObjectId("1")}, { nome : "Exemplo 99", tipo : 99, valor : 99 })
+  db.COLLECTION.replaceOne({_id: ObjectId("5f022654f66a26475d4fbf8c")}, { nome : "Exemplo 99", tipo : 99, valor : 99 })
   ```
 - Modifica um ou mais documentos em uma coleção
   ```shell
@@ -280,6 +280,20 @@ referência à um documento.
 
     db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$mul: {valor: 2}});
     ```
+
+### Deletar
+- Deleta a primeira ocorrencia do documento de acordo com os parâmetros na query
+  ```shell
+  # Deleta o documento cujo id é 5f022654f66a26475d4fbf8c
+
+  db.COLLECTION.deleteOne({_id: ObjectId("5f022654f66a26475d4fbf8c")});
+  ```
+- Deletar varios documentos de acordo com o filtro estabelecido
+  ```shell
+  # Deleta os documentos cujo tipo é 3
+
+  db.COLLECTION.deleteMany({tipo: 3});
+  ```
 
 ## Autor
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
