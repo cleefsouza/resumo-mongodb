@@ -1,6 +1,25 @@
 # MongoDB
 > Resumo ─ Módulo Persistência de Dados, Versionamento e Implantação ─ Bootcamp Desenvolvedor FullStack da IGTI
 
+### Índice
+- [Sobre](#sobre)
+- [Download e instalação](#instalacao)
+- [Comandos básicos](#basico)
+- [Coleções](#colecoes)
+- [Criar](#criar)
+- [Consultar](#consultar)
+- [Operadores lógicos](#logicos)
+- [Operadores de comparação](#comparacao)
+- [Atualizar](#atualizar)
+- [Operadores de atualização](#atualizacao)
+- [Deletar](#deletar)
+- [BulkWrite](#bulkwrite)
+- [Index](#index)
+- [Mais informações](#informacoes)
+- [Autor](#autor)
+- [Meta](#meta)
+
+### Sobre <div id="sobre"></div>
 O **MongoDB** é um banco de dados NoSQL orientado à objetos que vem sendo adotado tanto em startups quanto em pequenas e grandes coorporações.
 
 A organização dos dados no MongoDB é definida conforme a hierarquia abaixo:
@@ -13,7 +32,7 @@ referência à um documento;
 
 <img src="https://d2m498l008ebpa.cloudfront.net/2017/07/sql-nosql.png" title="BDR vs MongoDB" width=500/>
 
-### Download e instalação
+### Download e instalação <div id="instalacao"></div>
 - Realize o download da versão community no site do MongoDB;
   > **Link:** [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 - Para facilitar o manuseio do mongo no windows, adicione as variaveis de ambiente o **path** da pasta bin;
@@ -30,7 +49,7 @@ referência à um documento;
       target_arch: x86_64
   ```
 
-### Comandos básicos
+### Comandos básicos <div id="basico"></div>
 - Definir um diretório para armazenamento dos dados;
   ```shell
   mongod --dbpath="X:\...\Exemplo"
@@ -56,7 +75,7 @@ referência à um documento;
   db.dropDatabase()
   ```
 
-### Coleções
+### Coleções <div id="colecoes"></div>
 - Criar uma coleção na base de dados;
   ```shell
   db.createCollection(name, options);
@@ -80,7 +99,7 @@ referência à um documento;
   db.COLLECTION.drop();
   ```
 
-### Criar
+### Criar <div id="criar"></div>
 - Inserir apenas um documento na base de dados;
   ```shell
   db.COLLECTION.insertOne({nome: "Exemplo 1", tipo: 1, valor: 10});
@@ -97,7 +116,7 @@ referência à um documento;
   db.COLLECTION.insert({...});
   ```
 
-### Consultar
+### Consultar <div id="consultar"></div>
 - Retorna todos os documentos existentes na coleção;
   ```shell
   db.COLLECTION.find(query, porjection);
@@ -145,7 +164,7 @@ referência à um documento;
   db.COLLECTION.findOne(query, projection);
   ```
 
-### Operadores lógicos
+### Operadores lógicos <div id="logicos"></div>
   - Retorna tudo que atende as condições;
     ```shell
     # $and
@@ -171,7 +190,7 @@ referência à um documento;
     db.COLLECTION.find({$nor: [{nome: ...}, {valor: ...}]});
     ```
 
-### Operadores de comparação
+### Operadores de comparação <div id="comparacao"></div>
   - Igual à ...
     ```shell
     # $eq
@@ -221,7 +240,7 @@ referência à um documento;
     db.COLLECTION.find({nome: {$nin: ["Exemplo 1", "Exemplo 2"]}}, {_id: 0});
     ```
 
-### Atualizar
+### Atualizar <div id="atualizar"></div>
 - Atualiza um documento especifico em uma coleção;
   - `query`: busca a primeira ocorrencia do documento de acordo com os parâmetros na query;
   - `update`: quais os novos valores que serão modificados;
@@ -245,7 +264,7 @@ referência à um documento;
   db.COLLECTION.update(query, update, options);
   ```
 
-### Operadores de atualização
+### Operadores de atualização <div id="atualizacao"></div>
   - Incrementa o valor atual de um campo;
     ```shell
     # $inc
@@ -281,7 +300,7 @@ referência à um documento;
     db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$mul: {valor: 2}});
     ```
 
-### Deletar
+### Deletar <div id="deletar"></div>
 - Deleta a primeira ocorrencia do documento de acordo com os parâmetros na query;
   ```shell
   # Deletar o documento cujo id é 5f022654f66a26475d4fbf8c
@@ -295,7 +314,7 @@ referência à um documento;
   db.COLLECTION.deleteMany({tipo: 3});
   ```
 
-### BulkWrite
+### BulkWrite <div id="bulkwrite"></div>
 Executar comandos em massa.
 
 ```shell
@@ -360,7 +379,7 @@ db.COLLECTION.bulkWrite(
   ], {ordered: true});
 ```
 
-### Índices
+### Index <div id="index"></div> 
 Estruturas de dados especiais que armazenam informações de um ou mais campos com um determinada ordenação. Facilitam e melhoram a busca por seus documentos.
 - Exibe os índices criados de uma determinada coleção;
   ```shell
@@ -393,11 +412,11 @@ Estruturas de dados especiais que armazenam informações de um ou mais campos c
   ```
 
 
-### Mais informações
+### Mais informações <div id="informacoes"></div>
 Para mais detalhes sobre o MongoDB e sua gama de funcionalidades, consulte a documentação em [MongoDB Getting Started](https://docs.mongodb.com/manual/tutorial/getting-started/).
 
-### Autor
+### Autor <div id="autor"></div>
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
 
-### Meta
+### Meta <div id="meta"></div>
 Made with 💚 by **Cleef Souza**
