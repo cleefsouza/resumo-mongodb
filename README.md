@@ -15,6 +15,7 @@
 - [Deletar](#deletar)
 - [BulkWrite](#bulkwrite)
 - [Index](#index)
+- [Agregação](#agregacao)
 - [Mais informações](#informacoes)
 - [Autor](#autor)
 - [Meta](#meta)
@@ -150,8 +151,8 @@ referência à um documento;
     ```
   - Ordenar os valores da consulta de acordo com o campo passado;
     ```shell
-    # 1: crescente
-    # -1: decrescente
+    # 1: ascendente
+    # -1: descendente
 
     db.COLLECTION.find().sort({_id: 1});
     ```
@@ -387,8 +388,8 @@ Estruturas de dados especiais que armazenam informações de um ou mais campos c
   ```
 - Criando índice na coleção;
   ```shell
-  # 1: crescente
-  # -1: decrescente
+  # 1: ascendente
+  # -1: descendente
 
   db.COLLECTION.createIndex({tipo: 1});
 
@@ -411,6 +412,40 @@ Estruturas de dados especiais que armazenam informações de um ou mais campos c
   db.COLLECTION.dropIndexes();
   ```
 
+### Agregação <div id="agregacao"></div>
+- Agrupa valores de vários documentos e executa operações nos dados agrupados para retornar um único resultado.
+  |Operações|Descrição|
+  |--|--|
+  |$project|Define os campos que serão carregados do documento|
+  |$match|Filtra os documentos que serão utilizados na agregação|
+  |$group|Realiza a agregação com operações de agregação (sum, abs, avg, ...)|
+  |$sort|Realiza a ordenação do resultado apresentado|
+  |$skip|Pula os documentos que não serão agregados|
+  |$limit|Limita o número de documentos que serão agregados|
+  ```shell
+  db.COLLECTION.aggregate([
+    {$project: {nome, valor}},
+    {$math: {tipo: 1}},
+    {$group: {_id: {tipo:"$tipo"}, total: {$sum: "$valor"}}},
+    {$sort: {_id: 1, nome: -1}},
+    {$skip: 1},
+    {$limit: 100},
+  ]);
+  ```
+- Retorna a quantidade de registros em uma coleção de acordo com o filtro definido
+  ```shell
+  # Menor precisão
+
+  db.COLLECTION.count({tipo: 3});
+
+  # Maior precisão
+
+  db.COLLECTION.countDocuments({tipo: 3});
+  ```
+- Retorna os campos distintos de uma coleção
+  ```shell
+  db.COLLECTION.distinct({tipo: 1});
+  ```
 
 ### Mais informações <div id="informacoes"></div>
 Para mais detalhes sobre o MongoDB e sua gama de funcionalidades, consulte a documentação em [MongoDB Getting Started](https://docs.mongodb.com/manual/tutorial/getting-started/).
