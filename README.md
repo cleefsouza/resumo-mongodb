@@ -8,8 +8,8 @@ A organização dos dados no MongoDB é definida conforme a hierarquia abaixo:
 - **Banco de dados:** pode conter uma ou mais coleções;
 - **Coleções:** pode conter diferentes tipos de documentos;
 - **Documentos:** pode conter tuplas de chave e valor em lista, vetor ou uma
-referência à um documento.
-- **Campos:** tuplas, vetores ou referências a outros documentos
+referência à um documento;
+- **Campos:** tuplas, vetores ou referências a outros documentos.
 
 <img src="https://d2m498l008ebpa.cloudfront.net/2017/07/sql-nosql.png" title="BDR vs MongoDB" width=500/>
 
@@ -31,38 +31,38 @@ referência à um documento.
   ```
 
 ### Comandos básicos
-- Definir um diretório para armazenamento dos dados
+- Definir um diretório para armazenamento dos dados;
   ```shell
   mongod --dbpath="X:\...\Exemplo"
   ```
-- Acessar o banco localmente
+- Acessar o banco localmente;
   ```shell
   mongo -host localhost:27017
   ```
-- Acessar uma base de dados, caso a mesma não exista, automaticamente é criada após a inserção de um documento na base citada
+- Acessar uma base de dados, caso a mesma não exista, automaticamente é criada após a inserção de um documento na base citada;
   ```shell
   use DATABASE
   ```
-- Exibir as bases de dados existentes
+- Exibir as bases de dados existentes;
   ```shell
   show dbs
   ```
-- Exibir a base que está sendo manipulada
+- Exibir a base que está sendo manipulada;
   ```shell
   db
   ```
-- Remover a base de dados atual do servidor MongoDB
+- Remover a base de dados atual do servidor MongoDB.
   ```shell
   db.dropDatabase()
   ```
 
 ### Coleções
-- Criar uma coleção na base de dados
+- Criar uma coleção na base de dados;
   ```shell
-  db.createCollection(name, options)
+  db.createCollection(name, options);
   ```
-  - `name`: nome da coleção
-  - `options (opcional)`: define as configurações da coleção
+  - `name`: nome da coleção;
+  - `options (opcional)`: define as configurações da coleção;
     |Campo|Tipo|Descrição|
     |--|--|--|
     |capped|boolean|Define uma coleção limitada, se `true`, o campo size deve ser definido|
@@ -71,45 +71,45 @@ referência à um documento.
     |validator|document|Documento que define regras e exceções da documentos|
     |validationLevel|string|Define o rigor das regras de validação aplicadas aos documentos|
     |validationAction|string|Determina se acusa erros em documentos inválidos ou apenas alerta sobre as violações (Permite documentos inválidos serem inseridos)|
-- Listar as coleções existentes
+- Listar as coleções existentes;
   ```shell
-  show collections
+  show collections;
   ```
-- Remover uma coleção da base de dados
+- Remover uma coleção da base de dados.
   ```shell
-  db.COLLECTION.drop()
+  db.COLLECTION.drop();
   ```
 
 ### Criar
-- Inserir apenas um documento na base de dados
+- Inserir apenas um documento na base de dados;
   ```shell
-  db.COLLECTION.insertOne({nome: "Exemplo 1", tipo: 1, valor: 10})
+  db.COLLECTION.insertOne({nome: "Exemplo 1", tipo: 1, valor: 10});
   ```
-- Inserir múltiplos documentos objeto na base de dados
+- Inserir múltiplos documentos objeto na base de dados;
   ```shell
   db.COLLECTION.insertMany([
     {nome: "Exemplo 2", tipo: 2, valor: 7.5},
     {nome: "Exemplo 3", tipo: 3, valor: 9}
-  ])
+  ]);
   ```
-- Inserir um ou mais documento na base de dados
+- Inserir um ou mais documento na base de dados.
   ```shell
-  db.COLLECTION.insert({...})
+  db.COLLECTION.insert({...});
   ```
 
 ### Consultar
-- Retorna todos os documentos existentes na coleção
+- Retorna todos os documentos existentes na coleção;
   ```shell
-  db.COLLECTION.find(query, porjection)
+  db.COLLECTION.find(query, porjection);
   ```
-  - `query (opcional)`: quais filtros serão utilizados
+  - `query (opcional)`: quais filtros serão utilizados;
     ```shell
     db.COLLECTION.find({nome: "Exemplo 1"}, {});
 
     # Output:
     # { "_id" : "5f022654f66a26475d4fbf8c", "nome" : "Exemplo 1", "tipo" : "1", "valor" : 10 }
     ```
-  - `projection (opcional)`: quais campos serão retornados
+  - `projection (opcional)`: quais campos serão retornados;
     ```shell
     # 0: remove
     # 1: permanece
@@ -121,54 +121,54 @@ referência à um documento.
     # { "nome" : "Exemplo 2" }
     # { "nome" : "Exemplo 3" }
     ```
-  - Adicionar limite de documentos que serão retornados
+  - Adicionar limite de documentos que serão retornados;
     ```shell
-    db.COLLECTION.find().limit(n)
+    db.COLLECTION.find().limit(n);
     ```
   - Pular alguns documentos na consulta;
     ```shell
-    db.COLLECTION.find().skip(n)
+    db.COLLECTION.find().skip(n);
     ```
-  - Ordenar os valores da consulta de acordo com o campo passado
+  - Ordenar os valores da consulta de acordo com o campo passado;
     ```shell
     # 1: crescente
     # -1: decrescente
 
-    db.COLLECTION.find().sort({_id: 1})
+    db.COLLECTION.find().sort({_id: 1});
     ```
   - Exibir os resultados de forma mais organizada;
     ```shell
-    db.COLLECTION.find().pretty()
+    db.COLLECTION.find().pretty();
     ```
-- Retornar apenas um registro
+- Retornar apenas um registro.
   ```shell
-  db.COLLECTION.findOne(query, projection)
+  db.COLLECTION.findOne(query, projection);
   ```
 
 ### Operadores lógicos
-  - Retorna tudo que atende as condições
+  - Retorna tudo que atende as condições;
     ```shell
     # $and
 
-    db.COLLECTION.find({$and: [{nome: ...}, {valor: ...}]})
+    db.COLLECTION.find({$and: [{nome: ...}, {valor: ...}]});
     ```
-  - Retorna tudo que atende uma das confições
+  - Retorna tudo que atende uma das confições;
     ```shell
     # $or
 
-    db.COLLECTION.find({$or: [{tipo: ...}, {valor: ...}]})
+    db.COLLECTION.find({$or: [{tipo: ...}, {valor: ...}]});
     ```
-  - Inverte a condição especificada
+  - Inverte a condição especificada;
     ```shell
     # $not
 
-    db.COLLECTION.find({tipo: {$not: {$eq: "1"}}})
+    db.COLLECTION.find({tipo: {$not: {$eq: "1"}}});
     ```
-  - Retorna tudo que não atender as condições
+  - Retorna tudo que não atender as condições.
     ```shell
     # $nor
 
-    db.COLLECTION.find({$nor: [{nome: ...}, {valor: ...}]})
+    db.COLLECTION.find({$nor: [{nome: ...}, {valor: ...}]});
     ```
 
 ### Operadores de comparação
@@ -222,58 +222,58 @@ referência à um documento.
     ```
 
 ### Atualizar
-- Atualiza um documento especifico em uma coleção
-  - `query`: busca a primeira ocorrencia do documento de acordo com os parâmetros na query
-  - `update`: quais os novos valores que serão modificados
+- Atualiza um documento especifico em uma coleção;
+  - `query`: busca a primeira ocorrencia do documento de acordo com os parâmetros na query;
+  - `update`: quais os novos valores que serão modificados;
   ```shell
   db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$set: {tipo: 2, valor: 5.99}});
   ```
-- Atualiza varios documentos de uma coleção de acordo com os parâmetros na query
+- Atualiza varios documentos de uma coleção de acordo com os parâmetros na query;
   ```shell
   # Atualizando todos os documentos do tipo 2
 
   db.COLLECTION.updateMany({tipo: 2}, {$set: {valor: 2.50}});
   ```
-- Sobrescreve todo o documento por um novo
+- Sobrescreve todo o documento por um novo;
   ```shell
   # Sobrescrevendo o documento de id 1 por um novo documento
 
   db.COLLECTION.replaceOne({_id: ObjectId("5f022654f66a26475d4fbf8c")}, { nome : "Exemplo 99", tipo : 99, valor : 99 });
   ```
-- Modifica um ou mais documentos em uma coleção
+- Modifica um ou mais documentos em uma coleção.
   ```shell
   db.COLLECTION.update(query, update, options);
   ```
 
 ### Operadores de atualização
-  - Incrementa o valor atual de um campo
+  - Incrementa o valor atual de um campo;
     ```shell
     # $inc
     # Incrementando 10 ao valor atual
 
     db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$inc: {valor: 10}});
     ```
-  - Atualiza o valor de um campo ou cria um novo campo
+  - Atualiza o valor de um campo ou cria um novo campo;
     ```shell
     # $set
 
     db.COLLECTION.updateOne({nome: "Exemplo 1"}, {$set: {tipo: 5, valor: 5.99}});
     ```
-  - Atualiza um campo data com a data e hora atual
+  - Atualiza um campo data com a data e hora atual;
     ```shell
     # $currentDate
     # Adicionando o campo modificacao com a data e hora atual em todos os documentos da coleção
 
     db.COLLECTION.updateMany({}, {$currentDate: {modificacao: true}});
     ```
-  - Utilizado para remover campos de um documento
+  - Utilizado para remover campos de um documento;
     ```shell
     # $unset
     # Removendo campo modificacao de todos os documentos da coleção
 
     db.COLLECTION.updateMany({}, {$unset: {modificacao: 1}});
     ```
-  - Multiplica o valor de um campo
+  - Multiplica o valor de um campo.
     ```shell
     # $mul
     # Multiplicando valor atual por 2
@@ -282,13 +282,13 @@ referência à um documento.
     ```
 
 ### Deletar
-- Deleta a primeira ocorrencia do documento de acordo com os parâmetros na query
+- Deleta a primeira ocorrencia do documento de acordo com os parâmetros na query;
   ```shell
   # Deletar o documento cujo id é 5f022654f66a26475d4fbf8c
 
   db.COLLECTION.deleteOne({_id: ObjectId("5f022654f66a26475d4fbf8c")});
   ```
-- Deletar vários documentos de acordo com o filtro estabelecido
+- Deletar vários documentos de acordo com o filtro estabelecido.
   ```shell
   # Deletar os documentos cujo tipo é 3
 
@@ -296,7 +296,7 @@ referência à um documento.
   ```
 
 ### BulkWrite
-Executar comandos em massa
+Executar comandos em massa.
 
 ```shell
 db.COLLECTION.bulkWrite([operacao1, operacao2, ...], options);
@@ -360,11 +360,44 @@ db.COLLECTION.bulkWrite(
   ], {ordered: true});
 ```
 
-## Mais informações
+### Índices
+Estruturas de dados especiais que armazenam informações de um ou mais campos com um determinada ordenação. Facilitam e melhoram a busca por seus documentos.
+- Exibe os índices criados de uma determinada coleção;
+  ```shell
+  db.COLLECTION.getIndexes()
+  ```
+- Criando índice na coleção;
+  ```shell
+  # 1: crescente
+  # -1: decrescente
+
+  db.COLLECTION.createIndex({tipo: 1});
+
+  # "text": índice do tipo text
+
+  db.COLLECTION.createIndex({nome: "text"});
+
+  # Busca utilizando índice "text"
+
+  db.COLLECTION.find({$text: {$search: "Exemplo"}}, {_id: 1});
+  ```
+- Removendo índice da coleção.
+  ```shell
+  # Um índice específico
+
+  db.COLLECTION.dropIndex({nome: -1});
+
+  # Todos os índices
+
+  db.COLLECTION.dropIndexes();
+  ```
+
+
+### Mais informações
 Para mais detalhes sobre o MongoDB e sua gama de funcionalidades, consulte a documentação em [MongoDB Getting Started](https://docs.mongodb.com/manual/tutorial/getting-started/).
 
-## Autor
+### Autor
 Aryosvalldo Cleef ─ [linkedin](https://www.linkedin.com/in/aryosvalldo-cleef/) ─ [@cleefsouza](https://github.com/cleefsouza)
 
-## Meta
+### Meta
 Made with 💚 by **Cleef Souza**
