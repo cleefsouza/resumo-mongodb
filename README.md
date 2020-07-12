@@ -1,4 +1,4 @@
-# MongoDB
+# MongoDB :leaves:
 > Resumo ─ Módulo Persistência de Dados, Versionamento e Implantação ─ Bootcamp Desenvolvedor FullStack da IGTI
 
 ### Índice
